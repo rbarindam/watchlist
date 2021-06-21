@@ -1,0 +1,250 @@
+$primary-hue: 199;
+$secondary-hue: 38;
+
+
+$primary-text: hsl($primary-hue, 8%, 7%);
+$primary-color: hsl($primary-hue, 88%, 70%);
+$secondary-color: hsl($secondary-hue, 100%, 70%);
+
+$shadow-color: hsla($primary-hue, 12%, 20%, .05);
+$shadow-color-lite: hsla($secondary-hue, 12%, 28%, .02);
+
+
+$font-primary-light: 'Segoe UI Light', 'Open Sans Light', 'Segoe UI', 'Tahoma', sans-serif;
+$font-secondary-light: 'Open Sans Light', 'Segoe UI Light', 'Segoe UI', 'Tahoma', sans-serif;
+
+$font-primary: 'Segoe UI', 'Tahoma', sans-serif;
+$font-wide: 'Montserrat', Verdana, Geneva, Tahoma, sans-serif;
+
+@mixin tablet {
+    @media (max-width: 768px) {
+        @content;
+    }
+}
+
+::selection {
+    background: hsl($secondary-hue, 76%, 90%);
+    cursor: grab;
+}
+
+html, body {
+    margin: unset;
+    margin-bottom:  48px;
+
+    font-family: $font-primary-light;
+    color: $primary-text;
+
+    .bg {
+        position: fixed;
+        inset: 0;
+
+        background: linear-gradient(to bottom right, $primary-color -15%, $secondary-color 125%);
+        color: $primary-color;
+
+        .bg-icon {
+            position: absolute;
+            inset: auto 75px 75px auto;
+            width: 100px;
+        }
+    }
+}
+
+button {
+    &.iconified {
+        all: unset;
+        height: 2em;
+        width: 2em;
+        border-radius: 999in;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    * {
+        cursor: pointer;
+    }
+
+    cursor: pointer !important;
+}
+
+.taskbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    padding: 12px 24px;
+    background: hsla($primary-hue, 2%, 90%, .45);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 -4px 8px $shadow-color-lite;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .task-entry {
+        margin-right: 6mm;
+
+        button {
+            transition: all 240ms ease-out;
+
+            &:hover, &:focus, &:active, &.active {
+                background: $shadow-color;
+                box-shadow: inset 0 0 3px 0 $shadow-color;
+            }
+            &:active, &.active {
+                background: hsla($primary-hue, 12%, 20%, .15);
+            }
+        }
+    }
+}
+
+.popup-menu {
+    position: fixed;
+    bottom: 116px;
+    left: calc(50vw - 5mm);
+    height: 0; width: 0;
+    
+    transition: all 180ms ease-out;
+
+    .menu {
+        position: relative;
+        display: inline-block;
+        backdrop-filter: blur(7px);
+
+        transform-origin: left bottom;
+        transform: scale(0) translateX(-50%);
+        transition: inherit;
+
+        &.active {
+            transform: scale(1) translateX(-50%);
+            margin-bottom: 32px;
+        }
+
+        &[for="search"] {
+            backdrop-filter: unset;
+            #search-text {
+                all: unset;
+                width: MIN(260px, 90vw);
+                padding: 7px 15px 10px 15px;
+                border-radius: 7px;
+                border: 4px hsla($primary-hue, 26%, 90%, .9) solid;
+                background: hsla($primary-hue, 25%, 80%, .3);
+                backdrop-filter: blur(7px);
+                font-family: $font-primary-light;
+                letter-spacing: .5px;
+                caret-color: hsl($secondary-hue, 100%, 36%);
+
+                box-shadow: 4px 4px 16px hsla($primary-hue, 8%, 7%, .16);
+            }
+        }
+    }
+}
+
+.shows {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .show {
+        // flex-grow: 1;
+        position: relative;
+        margin: 21px;
+        padding: 21px;
+        border-radius: 7px;
+        background: hsla($primary-hue, 7%, 90%, .4);
+        backdrop-filter: blur(15px);
+        box-shadow: 2px 2px 4px 0 $shadow-color;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        transition: all 240ms linear;
+
+        &:hover {
+            background: hsla($primary-hue, 10%, 95%, .4);
+            box-shadow: 8px 8px 16px 0 $shadow-color;
+        }
+
+        .primary-info {
+            .title, .title-local {
+                margin: unset;
+                margin-right: 11px;
+                font-weight: unset;
+                line-height: 1.4em;
+                max-width: 390px;
+
+                cursor: default;
+            }
+    
+            .title {
+                font-size: 28px;
+                margin-left: -2px;
+            }
+    
+            .title-local {
+                font-family: $font-secondary-light;
+                letter-spacing: .5px;
+                font-size: 18px;
+                color: $primary-text;
+                text-shadow: 0 0 2px $shadow-color;
+                margin-left: -1px;
+            }
+    
+            .last-watched {
+                font-family: $font-wide;
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: .6px;
+                color: hsla($secondary-hue, 12%, 10%, .75);
+                text-shadow: 1px 1px 1px $shadow-color;
+            }
+        }
+
+        .bottom-aligned {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 48px;
+            gap: 42px;
+
+            .secondary-info {
+                .next-release {
+                    font-family: $font-wide;
+                    font-weight: 500;
+                    font-size: 10px;
+                    letter-spacing: .7px;
+                    color: hsla($secondary-hue, 12%, 10%, .85);
+                    text-shadow: 1px 1px 1px $shadow-color;
+                }
+            }
+
+            .local-actions {
+                display: flex;
+
+                .local-action {
+                    margin-right: 10px;
+                    color: hsla($secondary-hue, 12%, 10%, .1);
+                    transition: all 120ms ease-out;
+
+                    &:hover, &:focus {
+                        color: hsla($secondary-hue, 12%, 10%, .3);
+                    }
+
+                    &.selected {
+                        color: hsla($primary-hue, 26%, 16%, .5);
+                        
+                        &:hover, &:focus {
+                            color: hsla($secondary-hue, 36%, 26%, .5);
+                        }
+                    }
+
+                    &:active {
+                        color: hsla($secondary-hue, 12%, 10%, .5);
+                    }
+                }
+            }
+        }
+    }
+}
